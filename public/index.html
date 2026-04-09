@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Candidate Response Form</title>
+  <link rel="icon" type="image/png" href="assets/favicon.ico" />
+  <link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-mark">
+      <img src="assets/logo_long.png" alt="Strategy1 HR Logo" />
+    </div>
+  </div>
+
+  <!-- Intro / role banner -->
+  <div class="intro">
+    <h1 id="introTitle">Please answer all questions to complete your application.</h1>
+  </div>
+
+  <!-- Form -->
+  <form id="screeningForm" novalidate>
+
+    <!-- Hidden fields (populated from URL params) -->
+    <input type="hidden" name="candidate_email" id="candidate_email" />
+    <input type="hidden" name="candidate_name" id="candidate_name" />
+    <input type="hidden" name="advert_title" id="advert_title" />
+
+    <!-- Section 1: Screening questions -->
+    <div class="card" style="margin-top:12px;">
+      <div class="card-section">
+        <div class="section-label">Questions</div>
+
+        <!-- suburb -->
+        <div class="field">
+          <label class="field-label" for="suburb">
+            Can you confirm the suburb you are currently living in? <span class="req">*</span>
+          </label>
+          <input type="text" id="suburb" name="suburb" placeholder="e.g. Parramatta" autocomplete="address-level2" />
+          <p class="field-error" id="suburbError">Please enter your suburb.</p>
+        </div>
+
+        <!-- car_licence -->
+        <div class="field">
+          <span class="field-label">Do you have a car and a driver's license? <span class="req">*</span></span>
+          <div class="radio-group" id="car_licence-group">
+            <label class="radio-card">
+              <input type="radio" name="car_licence" value="Yes" />
+              <span class="rc-label">Yes</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="car_licence" value="No" />
+              <span class="rc-label">No</span>
+            </label>
+          </div>
+          <p class="field-error" id="car_licenceError">Please select an option.</p>
+        </div>
+
+        <!-- fulltime_hours -->
+        <div class="field">
+          <span class="field-label">Are you able to work fulltime hours (Monday to Friday, 38 hours per week)? <span class="req">*</span></span>
+          <div class="radio-group" id="fulltime_hours-group">
+            <label class="radio-card">
+              <input type="radio" name="fulltime_hours" value="Yes" />
+              <span class="rc-label">Yes</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="fulltime_hours" value="No" />
+              <span class="rc-label">No</span>
+            </label>
+          </div>
+          <p class="field-error" id="fulltime_hoursError">Please select an option.</p>
+        </div>
+
+        <!-- immediate_start -->
+        <div class="field">
+          <span class="field-label">Are you available for an immediate start? <span class="req">*</span></span>
+          <div class="radio-group" id="immediate_start-group">
+            <label class="radio-card">
+              <input type="radio" name="immediate_start" value="Yes" />
+              <span class="rc-label">Yes</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="immediate_start" value="No - within 2 weeks" />
+              <span class="rc-label">No</span>
+            </label>
+          </div>
+          <p class="field-error" id="immediate_startError">Please select an option.</p>
+        </div>
+
+        <!-- preferred_shift -->
+        <div class="field">
+          <span class="field-label">What is your preferred shift? <span class="req">*</span></span>
+          <div class="radio-group" id="preferred_shift-group">
+            <label class="radio-card">
+              <input type="radio" name="preferred_shift" value="Day shift" />
+              <span class="rc-label">Day shift</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="preferred_shift" value="Afternoon shift" />
+              <span class="rc-label">Afternoon shift</span>
+            </label>
+            <label class="radio-card">
+              <input type="radio" name="preferred_shift" value="Night shift" />
+              <span class="rc-label">Night shift</span>
+            </label>
+          </div>
+          <p class="field-error" id="preferred_shiftError">Please select an option.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div class="submit-section">
+      <button type="submit" class="submit-btn" id="submitBtn">Submit my answers</button>
+      <p class="submit-note">Your responses are sent securely to Strategy1HR and cannot be edited after submission.</p>
+    </div>
+
+  </form>
+
+  <!-- Error banner (shown on network/server failure) -->
+  <div class="error-banner" id="errorBanner">
+    <p>Something went wrong submitting your answers. Please check your connection and try again.</p>
+    <button class="retry-btn" id="retryBtn">Try again</button>
+  </div>
+
+  <!-- Success screen (shown after successful submission) -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <!-- Add success icon SVG here -->
+    </div>
+    <h2>Thank you!</h2>
+    <p>Your screening responses have been received.<br>Our team will be in touch with next steps shortly.</p>
+  </div>
+
+  <div class="footer">
+    &copy; Strategy1HR &nbsp;·&nbsp; Powered by 8020Green<br>
+    Your information is handled securely and used only for recruitment purposes.
+  </div>
+ <script src="script.js"></script>
+</body>
+</html>
