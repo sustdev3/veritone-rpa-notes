@@ -1,0 +1,17 @@
+{
+  "name": "veritone-rpa-notes",
+  "version": "1.0.0",
+  "description": "A Robotic Process Automation bot for Veritone Hire that automatically writes answers into the Notes field in AdCourier",
+  "main": "index.html",
+  "scripts": {
+    "dev": "echo 'Static site - no dev server needed'",
+    "build": "echo 'Static site - no build step needed'"
+  },
+  "keywords": [
+    "rpa",
+    "veritone",
+    "automation"
+  ],
+  "author": "",
+  "license": "MIT"
+}
