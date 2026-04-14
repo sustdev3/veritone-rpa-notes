@@ -17,14 +17,9 @@
     </div>
   </div>
 
-  <!-- Intro / greeting banner -->
+  <!-- Intro / role banner -->
   <div class="intro">
-    <div id="greetingSection">
-      <h1 id="introTitle">Hi there,</h1>
-      <p id="introMessage">It's the team from Strategy One HR. You have just applied to our ad on Seek for <span id="jobTitle"></span>.</p>
-      <p id="introPrompt">Please help us fast-track your application by answering a couple of quick questions. <a href="#" id="revealLink" class="reveal-link">Click here</a></p>
-      <p id="introDisclaimer">(disregard the no reply email, we do receive replies)</p>
-    </div>
+    <h1 id="introTitle">Please answer all questions to complete your application.</h1>
   </div>
 
   <!-- Form -->
@@ -35,8 +30,8 @@
     <input type="hidden" name="candidate_name" id="candidate_name" />
     <input type="hidden" name="advert_title" id="advert_title" />
 
-    <!-- Section 1: Screening questions (initially hidden) -->
-    <div class="card questions-section" style="margin-top:12px; display:none;">
+    <!-- Section 1: Screening questions -->
+    <div class="card" style="margin-top:12px;">
       <div class="card-section">
         <div class="section-label">Questions</div>
 
@@ -65,30 +60,6 @@
           <p class="field-error" id="car_licenceError">Please select an option.</p>
         </div>
 
-        <!-- transport -->
-        <div class="field">
-          <span class="field-label">How do you normally travel to work? <span class="req">*</span></span>
-          <div class="radio-group" id="transport-group">
-            <label class="radio-card">
-              <input type="radio" name="transport" value="Car/Motorbike" />
-              <span class="rc-label">Car/Motorbike</span>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="transport" value="Public transport" />
-              <span class="rc-label">Public Transport</span>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="transport" value="Get a lift" />
-              <span class="rc-label">Get a Lift</span>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="transport" value="Other" />
-              <span class="rc-label">Other</span>
-            </label>
-          </div>
-          <p class="field-error" id="transportError">Please select an option.</p>
-        </div>
-
         <!-- fulltime_hours -->
         <div class="field">
           <span class="field-label">Are you able to work fulltime hours (Monday to Friday, 38 hours per week)? <span class="req">*</span></span>
@@ -107,23 +78,15 @@
 
         <!-- immediate_start -->
         <div class="field">
-          <span class="field-label">When would you be able to start?  <span class="req">*</span></span>
+          <span class="field-label">Are you available for an immediate start? <span class="req">*</span></span>
           <div class="radio-group" id="immediate_start-group">
             <label class="radio-card">
-              <input type="radio" name="immediate_start" value="Right Now" />
-              <span class="rc-label">Right Now</span>
+              <input type="radio" name="immediate_start" value="Yes" />
+              <span class="rc-label">Yes</span>
             </label>
             <label class="radio-card">
-              <input type="radio" name="immediate_start" value="A few days" />
-              <span class="rc-label">A few days</span>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="immediate_start" value="A week" />
-              <span class="rc-label">A week</span>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="immediate_start" value="Longer" />
-              <span class="rc-label">Longer</span>
+              <input type="radio" name="immediate_start" value="No" />
+              <span class="rc-label">No</span>
             </label>
           </div>
           <p class="field-error" id="immediate_startError">Please select an option.</p>
@@ -149,39 +112,11 @@
           <p class="field-error" id="preferred_shiftError">Please select an option.</p>
         </div>
 
-        <!-- last_job_end -->
-        <div class="field">
-          <span class="field-label">When did you finish your last job? <span class="req">*</span></span>
-          <div class="radio-group" id="last_job_end-group">
-            <label class="radio-card">
-              <input type="radio" name="last_job_end" value="Still working" />
-              <span class="rc-label">Still working</span>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="last_job_end" value="Last few days" />
-              <span class="rc-label">Last few days</span>
-            </label>
-            <label class="radio-card">
-              <input type="radio" name="last_job_end" value="1 - 2 weeks ago" />
-              <span class="rc-label">1 - 2 weeks ago</span>
-            </label>
-          </div>
-          <p class="field-error" id="last_job_endError">Please select an option.</p>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Closing message -->
-    <div class="card closing-section" style="margin-top:12px; display:none;">
-      <div class="card-section">
-        <p class="closing-message">Thanks for your assistance with this.</p>
-        <p class="closing-note">*** Please note that candidates who respond to this email will be contacted first ***</p>
       </div>
     </div>
 
     <!-- Submit -->
-    <div class="submit-section" style="display:none;">
+    <div class="submit-section">
       <button type="submit" class="submit-btn" id="submitBtn">Submit my answers</button>
       <p class="submit-note">Your responses are sent securely to Strategy1HR and cannot be edited after submission.</p>
     </div>

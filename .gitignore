@@ -7,4 +7,3 @@ node_modules/
 # Ignore environment files with actual secret values
 .env.local
 .env.*.local
-config.json
