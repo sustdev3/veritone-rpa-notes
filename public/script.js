@@ -1,24 +1,21 @@
-    // ── Load config.env ──────────────────────────────────────────────────────
-    (function () {
-      try {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'config.env', false);
-        xhr.send(null);
-        var env = {};
-        if (xhr.status === 200 || xhr.status === 0) {
-          xhr.responseText.split('\n').forEach(function (line) {
-            line = line.trim();
-            if (!line || line.charAt(0) === '#') return;
-            var eqIdx = line.indexOf('=');
-            if (eqIdx === -1) return;
-            env[line.substring(0, eqIdx).trim()] = line.substring(eqIdx + 1).trim();
-          });
-        }
-        window.ENV = env;
-      } catch (e) {
-        window.ENV = {};
-      }
-    })();
+    // ── Fetch GAS URL from API ───────────────────────────────────────────────
+    let G_APPS_SCRIPT_URL = '';
+
+    // Try API first (production), fallback to config.json (local dev)
+    fetch('/api/config.js')
+      .then(res => res.json())
+      .then(data => {
+        G_APPS_SCRIPT_URL = data.gasUrl;
+      })
+      .catch(() => {
+        // Fallback: try loading config.json for local testing
+        fetch('/config.json')
+          .then(res => res.json())
+          .then(data => {
+            G_APPS_SCRIPT_URL = data.gasUrl;
+          })
+          .catch(err => console.error('Failed to load config:', err));
+      });
 
     // ── Read URL parameters and populate hidden fields + UI ──────────────────
     const params = new URLSearchParams(window.location.search);
@@ -33,14 +30,29 @@
 
     // Personalise the intro banner
     if (candidateName) {
-      document.getElementById('introTitle').textContent =
-        'Hi ' + candidateName + ', please answer all questions to complete your application.';
+      const firstName = candidateName.split(' ')[0]; // Extract first name
+      document.getElementById('introTitle').textContent = 'Hi ' + firstName + ',';
+    }
+
+    // Populate job title in intro
+    if (advertTitle) {
+      document.getElementById('jobTitle').textContent = advertTitle;
     }
 
     // ── Abuse prevention: warn if accessed without email param ───────────────
     if (!candidateEmail) {
       console.warn('Form accessed without candidate_email parameter.');
     }
+
+    // ── Reveal questions on link click ──────────────────────────────────────
+    document.getElementById('revealLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.querySelector('.questions-section').style.display = 'block';
+      document.querySelector('.closing-section').style.display = 'block';
+      document.querySelector('.submit-section').style.display = 'block';
+      // Scroll to questions
+      document.querySelector('.questions-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     // ── Radio card highlight on selection ────────────────────────────────────
     document.querySelectorAll('.radio-group').forEach(function(group) {
@@ -77,7 +89,7 @@
       }
 
       // Radio groups
-      ['car_licence', 'fulltime_hours', 'immediate_start', 'preferred_shift'].forEach(function(name) {
+      ['car_licence', 'transport', 'fulltime_hours', 'immediate_start', 'preferred_shift', 'last_job_end'].forEach(function(name) {
         var selected = document.querySelector('input[name="' + name + '"]:checked');
         var err = document.getElementById(name + 'Error');
         if (!selected) {
@@ -99,15 +111,15 @@
         advert_title:     advertTitle,
         suburb:           document.getElementById('suburb').value.trim(),
         car_licence:      document.querySelector('input[name="car_licence"]:checked').value,
+        transport:        document.querySelector('input[name="transport"]:checked').value,
         fulltime_hours:   document.querySelector('input[name="fulltime_hours"]:checked').value,
         immediate_start:  document.querySelector('input[name="immediate_start"]:checked').value,
         preferred_shift:  document.querySelector('input[name="preferred_shift"]:checked').value,
+        last_job_end:     document.querySelector('input[name="last_job_end"]:checked').value,
       };
     }
 
-    // ── Submit ───────────────────────────────────────────────────────────────   
-    const APPS_SCRIPT_URL = window.ENV.G_APPS_SCRIPT_URL;
-
+    // ── Submit ───────────────────────────────────────────────────────────────
     function submitForm() {
       if (!validate()) {
         var firstError = document.querySelector('.field-error.show, .has-error');
@@ -130,7 +142,7 @@
       var payload = getPayload();
     
       // FIXED: Send as JSON with correct header
-      fetch(APPS_SCRIPT_URL, {
+      fetch(G_APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },  // ← JSON header
@@ -138,6 +150,7 @@
       })
       .then(function() {
         console.log('Form submitted successfully!');
+        document.querySelector('.intro').style.display = 'none';
         document.getElementById('screeningForm').style.display = 'none';
         document.getElementById('successScreen').classList.add('show');
         window.scrollTo({ top: 0, behavior: 'smooth' });
