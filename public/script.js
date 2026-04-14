@@ -1,24 +1,21 @@
-    // ── Load config.env ──────────────────────────────────────────────────────
-    (function () {
-      try {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'config.env', false);
-        xhr.send(null);
-        var env = {};
-        if (xhr.status === 200 || xhr.status === 0) {
-          xhr.responseText.split('\n').forEach(function (line) {
-            line = line.trim();
-            if (!line || line.charAt(0) === '#') return;
-            var eqIdx = line.indexOf('=');
-            if (eqIdx === -1) return;
-            env[line.substring(0, eqIdx).trim()] = line.substring(eqIdx + 1).trim();
-          });
-        }
-        window.ENV = env;
-      } catch (e) {
-        window.ENV = {};
-      }
-    })();
+    // ── Fetch GAS URL from API ───────────────────────────────────────────────
+    let G_APPS_SCRIPT_URL = '';
+
+    // Try API first (production), fallback to config.json (local dev)
+    fetch('/api/config.js')
+      .then(res => res.json())
+      .then(data => {
+        G_APPS_SCRIPT_URL = data.gasUrl;
+      })
+      .catch(() => {
+        // Fallback: try loading config.json for local testing
+        fetch('/config.json')
+          .then(res => res.json())
+          .then(data => {
+            G_APPS_SCRIPT_URL = data.gasUrl;
+          })
+          .catch(err => console.error('Failed to load config:', err));
+      });
 
     // ── Read URL parameters and populate hidden fields + UI ──────────────────
     const params = new URLSearchParams(window.location.search);
@@ -105,9 +102,7 @@
       };
     }
 
-    // ── Submit ───────────────────────────────────────────────────────────────   
-    const APPS_SCRIPT_URL = window.ENV.G_APPS_SCRIPT_URL;
-
+    // ── Submit ───────────────────────────────────────────────────────────────
     function submitForm() {
       if (!validate()) {
         var firstError = document.querySelector('.field-error.show, .has-error');
@@ -130,7 +125,7 @@
       var payload = getPayload();
     
       // FIXED: Send as JSON with correct header
-      fetch(APPS_SCRIPT_URL, {
+      fetch(G_APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },  // ← JSON header
