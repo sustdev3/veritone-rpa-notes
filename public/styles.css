@@ -157,7 +157,12 @@
     input[type="text"].has-error { border-color: var(--error); background: var(--error-bg); }
 
     /* ── Radio cards ── */
-    .radio-group { display: flex; flex-direction: row; gap: 8px; }
+    .radio-group {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
 
     .radio-card {
       display: inline;
@@ -170,6 +175,8 @@
       transition: border-color 0.12s;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
+      flex: 1 1 calc(50% - 10px);
+      min-width: 120px;
     }
 
     .radio-card:active { background: #f5f5f5; }
@@ -194,6 +201,51 @@
     }
 
     .radio-card.selected .rc-label { color: var(--green-dark); font-weight: 500; }
+
+    /* ── Responsive design - Tablet ── */
+    @media (max-width: 768px) {
+      .radio-card {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 100px;
+        padding: 11px 12px;
+        font-size: 14px;
+      }
+
+      .radio-card .rc-label {
+        font-size: 14px;
+      }
+
+      .radio-group {
+        gap: 7px;
+      }
+    }
+
+    /* ── Responsive design - Mobile ── */
+    @media (max-width: 480px) {
+      .radio-card {
+        flex: 1 1 calc(50% - 6px);
+        min-width: 85px;
+        padding: 10px 11px;
+        font-size: 13px;
+      }
+
+      .radio-card .rc-label {
+        font-size: 13px;
+      }
+
+      .radio-group {
+        gap: 6px;
+      }
+
+      .field {
+        margin-bottom: 15px;
+      }
+
+      .field-label {
+        font-size: 13px;
+        margin-bottom: 7px;
+      }
+    }
 
     /* ── Inline errors ── */
     .field-error {

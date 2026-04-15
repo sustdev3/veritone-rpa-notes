@@ -58,16 +58,6 @@
       console.warn('Form accessed without candidate_email parameter.');
     }
 
-    // ── Reveal questions on link click ──────────────────────────────────────
-    document.getElementById('revealLink').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.querySelector('.questions-section').style.display = 'block';
-      document.querySelector('.closing-section').style.display = 'block';
-      document.querySelector('.submit-section').style.display = 'block';
-      // Scroll to questions
-      document.querySelector('.questions-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-
     // ── Radio card highlight on selection ────────────────────────────────────
     document.querySelectorAll('.radio-group').forEach(function(group) {
       group.querySelectorAll('input[type="radio"]').forEach(function(radio) {
